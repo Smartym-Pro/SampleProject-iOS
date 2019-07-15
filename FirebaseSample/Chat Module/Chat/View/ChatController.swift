@@ -149,7 +149,6 @@ extension ChatController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = viewModel.messages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell") as! ChatCell
-        
         cell.message = message
         cell.delegate = self
         cell.messageLabel.text = message.text
@@ -165,8 +164,8 @@ extension ChatController: UITableViewDataSource {
         } else {
             cell.messageImageViewContainer.isHidden = true
         }
-        cell.setOutgoing(message.isOutgoing())
         cell.dateLabel.text = dateFormatter.string(from: message.timestamp)
+        cell.setOutgoing(message.isOutgoing())
         return cell
     }
 }
@@ -230,8 +229,6 @@ extension ChatController: ChatCellDelegate {
     }
 }
 
-extension ChatController: UINavigationControllerDelegate {
-    
-}
+extension ChatController: UINavigationControllerDelegate { }
 
 

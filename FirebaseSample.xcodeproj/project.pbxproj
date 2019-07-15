@@ -13,7 +13,7 @@
 		161BA0CB22D8D3F000721C90 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161BA0CA22D8D3F000721C90 /* ChatListViewModel.swift */; };
 		162025E422CF75DD000B4466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162025E322CF75DD000B4466 /* AppDelegate.swift */; };
 		162025E622CF75DD000B4466 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162025E522CF75DD000B4466 /* LoginController.swift */; };
-		162025E922CF75DD000B4466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 162025E722CF75DD000B4466 /* Main.storyboard */; };
+		162025E922CF75DD000B4466 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 162025E722CF75DD000B4466 /* Chat.storyboard */; };
 		162025EB22CF75E0000B4466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 162025EA22CF75E0000B4466 /* Assets.xcassets */; };
 		162025EE22CF75E0000B4466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 162025EC22CF75E0000B4466 /* LaunchScreen.storyboard */; };
 		162025F622CF76FB000B4466 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 162025F522CF76FA000B4466 /* GoogleService-Info.plist */; };
@@ -26,6 +26,7 @@
 		1620260722D37E47000B4466 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1620260622D37E47000B4466 /* Message.swift */; };
 		1620260922D380F8000B4466 /* ConversationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1620260822D380F7000B4466 /* ConversationsProvider.swift */; };
 		1620260B22D38728000B4466 /* UsersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1620260A22D38728000B4466 /* UsersProvider.swift */; };
+		16213FD922DC942C00CC51FE /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16213FD822DC942C00CC51FE /* User.storyboard */; };
 		16489F9122D8E190009F89E7 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16489F9022D8E190009F89E7 /* Date+Extensions.swift */; };
 		16489F9822D8E28F009F89E7 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16489F9722D8E28F009F89E7 /* Conversation.swift */; };
 		16489F9A22D8E403009F89E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16489F9922D8E403009F89E7 /* User.swift */; };
@@ -46,7 +47,7 @@
 		162025E022CF75DD000B4466 /* FirebaseSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		162025E322CF75DD000B4466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		162025E522CF75DD000B4466 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		162025E822CF75DD000B4466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		162025E822CF75DD000B4466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Chat.storyboard; sourceTree = "<group>"; };
 		162025EA22CF75E0000B4466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		162025ED22CF75E0000B4466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		162025EF22CF75E0000B4466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 		1620260622D37E47000B4466 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1620260822D380F7000B4466 /* ConversationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsProvider.swift; sourceTree = "<group>"; };
 		1620260A22D38728000B4466 /* UsersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersProvider.swift; sourceTree = "<group>"; };
+		16213FD822DC942C00CC51FE /* User.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		16489F9022D8E190009F89E7 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		16489F9722D8E28F009F89E7 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		16489F9922D8E403009F89E7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -108,11 +110,9 @@
 			children = (
 				161BA0C722D7705700721C90 /* FirebaseSample.entitlements */,
 				162025E322CF75DD000B4466 /* AppDelegate.swift */,
-				16489F9522D8E23F009F89E7 /* Users */,
 				16489FA022D8F9B7009F89E7 /* Navigation */,
-				16489F9222D8E1EE009F89E7 /* ChatList */,
-				16489F9622D8E261009F89E7 /* Chat */,
-				162025E722CF75DD000B4466 /* Main.storyboard */,
+				16213FDA22DC945E00CC51FE /* Chat Module */,
+				16489F9522D8E23F009F89E7 /* User Module */,
 				16489F9F22D8F95F009F89E7 /* Shared Classes */,
 				1620260122D34A8A000B4466 /* Extensions */,
 				162025EA22CF75E0000B4466 /* Assets.xcassets */,
@@ -134,6 +134,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		16213FDA22DC945E00CC51FE /* Chat Module */ = {
+			isa = PBXGroup;
+			children = (
+				16489F9222D8E1EE009F89E7 /* ChatList */,
+				16489F9622D8E261009F89E7 /* Chat */,
+				162025E722CF75DD000B4466 /* Chat.storyboard */,
+			);
+			path = "Chat Module";
+			sourceTree = "<group>";
+		};
 		16489F9222D8E1EE009F89E7 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,13 +154,13 @@
 			path = ChatList;
 			sourceTree = "<group>";
 		};
-		16489F9522D8E23F009F89E7 /* Users */ = {
+		16489F9522D8E23F009F89E7 /* User Module */ = {
 			isa = PBXGroup;
 			children = (
 				16489FA822D8FAA9009F89E7 /* View */,
 				16489FA722D8FAA3009F89E7 /* Model */,
 			);
-			path = Users;
+			path = "User Module";
 			sourceTree = "<group>";
 		};
 		16489F9622D8E261009F89E7 /* Chat */ = {
@@ -247,6 +257,7 @@
 			children = (
 				162025E522CF75DD000B4466 /* LoginController.swift */,
 				162025FD22D34973000B4466 /* EditProfileController.swift */,
+				16213FD822DC942C00CC51FE /* User.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -334,9 +345,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				162025EE22CF75E0000B4466 /* LaunchScreen.storyboard in Resources */,
+				16213FD922DC942C00CC51FE /* User.storyboard in Resources */,
 				162025F622CF76FB000B4466 /* GoogleService-Info.plist in Resources */,
 				162025EB22CF75E0000B4466 /* Assets.xcassets in Resources */,
-				162025E922CF75DD000B4466 /* Main.storyboard in Resources */,
+				162025E922CF75DD000B4466 /* Chat.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,12 +430,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		162025E722CF75DD000B4466 /* Main.storyboard */ = {
+		162025E722CF75DD000B4466 /* Chat.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				162025E822CF75DD000B4466 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Chat.storyboard;
 			sourceTree = "<group>";
 		};
 		162025EC22CF75E0000B4466 /* LaunchScreen.storyboard */ = {

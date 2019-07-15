@@ -18,7 +18,7 @@ class MainNavigationController: UINavigationController {
     
     func autentificate() {
         if Auth.auth().currentUser != nil && DataManager.shared.userId != nil {
-            showMain()
+            showChat()
         } else {
             showLogIn()
         }
@@ -26,8 +26,8 @@ class MainNavigationController: UINavigationController {
     func showLogIn() {
         self.viewControllers = [self.storyboard?.instantiateViewController(withIdentifier: "LoginController") as! LoginController]
     }
-    func showMain() {
-        self.viewControllers = [self.storyboard?.instantiateViewController(withIdentifier: "ChatListController") as! ChatListController]
+    func showChat() {
+        self.viewControllers = [UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatListController") as! ChatListController]
     }
     @IBAction func unwindLogin(_ sender: UIStoryboardSegue) {
         autentificate()
