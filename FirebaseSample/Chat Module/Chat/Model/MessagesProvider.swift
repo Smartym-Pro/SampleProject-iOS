@@ -48,9 +48,8 @@ class MessagesProvider {
         }
     }
 
-    func sendMessage(_ message: Message, in conversation: Conversation, with user: User, completion: @escaping (Bool) -> ()) {
-        messagesReference.child(conversation.roomToken).updateChildValues([UUID().uuidString:message.convertToServer()]) {
-            (error:Error?, ref:DatabaseReference) in
+    func sendMessage(_ message: Message, in conversation: Conversation, with user: User, completion: @escaping (Bool) -> Void) {
+        messagesReference.child(conversation.roomToken).updateChildValues([UUID().uuidString: message.convertToServer()]) { (error: Error?, ref: DatabaseReference) in
             if error == nil {
                 self.updateLastMessage(message, in: conversation, with: user, completion: completion)
             } else {
@@ -59,17 +58,15 @@ class MessagesProvider {
         }
     }
     
-    func updateLastMessage(_ message: Message, in conversation: Conversation, with user: User, completion: @escaping (Bool) -> ()) {
+    func updateLastMessage(_ message: Message, in conversation: Conversation, with user: User, completion: @escaping (Bool) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             completion(false)
             return
         }
         let timestamp = 0 - message.timestamp.millisecondsSince1970
-        currentUserConversationsReference.child(currentUserId).child(conversation.roomToken).updateChildValues(["last_message": message.convertToServer(), "timestamp": timestamp]) {
-            (error:Error?, ref:DatabaseReference) in
+        currentUserConversationsReference.child(currentUserId).child(conversation.roomToken).updateChildValues(["last_message": message.convertToServer(), "timestamp": timestamp]) { (error: Error?, ref: DatabaseReference) in
             if error == nil {
-                self.currentUserConversationsReference.child(user.userId).child(conversation.roomToken).updateChildValues(["last_message": message.convertToServer(), "timestamp": timestamp]) {
-                    (error:Error?, ref:DatabaseReference) in
+                self.currentUserConversationsReference.child(user.userId).child(conversation.roomToken).updateChildValues(["last_message": message.convertToServer(), "timestamp": timestamp]) { (error: Error?, ref: DatabaseReference) in
                      if error == nil {
                          completion(true)
                      } else {
@@ -83,9 +80,6 @@ class MessagesProvider {
             }
         }
 
-            
     }
     
 }
-
-

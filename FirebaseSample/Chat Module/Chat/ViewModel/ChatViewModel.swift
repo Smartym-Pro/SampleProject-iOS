@@ -38,7 +38,7 @@ class ChatViewModel {
         }
     }
     
-    func uploadImage(_ image: UIImage, completion: @escaping (URL?) -> ()) {
+    func uploadImage(_ image: UIImage, completion: @escaping (URL?) -> Void) {
         FilesStorage.shared.uploadImage(image: image, path: ImagesPath.conversationPath(conversation!.roomToken), name: UUID().uuidString) { (url) in
             completion(url)
         }

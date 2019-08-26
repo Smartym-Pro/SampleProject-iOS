@@ -13,7 +13,7 @@ struct Message {
     let timestamp: Date
     let text: String?
     let image: String?
-    init(dictionary: [String : AnyHashable]) {
+    init(dictionary: [String: AnyHashable]) {
         self.author = dictionary["author_id"] as! String
         let timestampInt = dictionary["timestamp"] as! Int64
         self.timestamp = Date.init(milliseconds: abs(timestampInt))
@@ -34,7 +34,7 @@ extension Message {
         return DataManager.shared.userId == author
     }
     func convertToServer() -> [String: Any] {
-        let message: [String : Any?] = ["author_id": author, "text": text, "image": image, "timestamp": 0 - timestamp.millisecondsSince1970]
-        return message as [String : Any]
+        let message: [String: Any?] = ["author_id": author, "text": text, "image": image, "timestamp": 0 - timestamp.millisecondsSince1970]
+        return message as [String: Any]
     }
 }

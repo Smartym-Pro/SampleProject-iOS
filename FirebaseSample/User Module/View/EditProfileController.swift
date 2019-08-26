@@ -33,7 +33,7 @@ class EditProfileController: UIViewController {
     }
     
     func updateUI() {
-        if let image = user?.image{
+        if let image = user?.image {
              avatarImageView.sd_setImage(with: image, placeholderImage: UIImage(named: "empty_photo"), options: .highPriority, context: nil)
         } else {
             avatarImageView.image = UIImage(named: "empty_photo")
@@ -147,7 +147,7 @@ class EditProfileController: UIViewController {
 }
 
 extension EditProfileController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.originalImage] as? UIImage else {
             return

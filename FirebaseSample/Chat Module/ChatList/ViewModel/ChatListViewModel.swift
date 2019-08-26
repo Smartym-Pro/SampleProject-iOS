@@ -39,7 +39,7 @@ extension ChatListViewModel: ConversationsProviderDelegate {
     func conversationsDidFinishFetching(conversations: [Conversation]) {
         self.conversations = conversations
         delegate?.conversationsDidReceived()
-        let usersIds = conversations.compactMap{ $0.userId }
+        let usersIds = conversations.compactMap { $0.userId }
         fetchUsers(ids: usersIds)
     }
 }
@@ -47,7 +47,7 @@ extension ChatListViewModel: ConversationsProviderDelegate {
 extension ChatListViewModel {
     func fetchUsers(ids: [String]) {
         UsersProvider.shared.getUsers(for: ids) { (users) in
-            _ = users.map{ self.users[$0.userId] = $0 }
+            _ = users.map { self.users[$0.userId] = $0 }
             self.delegate?.usersDidFinishFetching()
         }
     }

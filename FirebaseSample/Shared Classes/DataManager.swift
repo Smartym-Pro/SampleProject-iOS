@@ -52,8 +52,6 @@ class DataManager: NSObject {
         }
     }
     
-    
-    
     func signOut() {
         UserDefaults.standard.removeObject(forKey: k_userId)
         UserDefaults.standard.removeObject(forKey: k_nickname)

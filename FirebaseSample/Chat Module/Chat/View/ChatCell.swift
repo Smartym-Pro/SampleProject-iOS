@@ -13,8 +13,6 @@ protocol ChatCellDelegate: class {
     func didSelectMessage(message: Message, cell: ChatCell?)
 }
 
-
-
 class ChatCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageTextContainer: UIView!
@@ -37,11 +35,9 @@ class ChatCell: UITableViewCell {
         }
     }
     
-    
     @IBAction func showImage(_ sender: Any) {
         delegate?.didSelectMessage(message: message, cell: self)
     }
-    
     
     func setOutgoing(_ outgoing: Bool) {
         if outgoing {
@@ -55,4 +51,3 @@ class ChatCell: UITableViewCell {
         }
     }
 }
-

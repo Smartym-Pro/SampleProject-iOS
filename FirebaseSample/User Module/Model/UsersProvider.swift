@@ -23,7 +23,7 @@ class UsersProvider {
         nicknameReference = Database.database().reference().child("nicknames")
     }
     
-    func getUserWith(id: String, completion: @escaping (User?)->()) {
+    func getUserWith(id: String, completion: @escaping (User?) -> Void) {
         userReference.child(id).observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
                 guard let children = snapshot.children.allObjects as? [DataSnapshot] else { return }
@@ -52,7 +52,7 @@ class UsersProvider {
         }
     }
     
-    func getUserWith(nickName:String, completion: @escaping (User?) -> ()) {
+    func getUserWith(nickName: String, completion: @escaping (User?) -> Void) {
         let userQuery = userReference.queryOrdered(byChild: "nickname")
         userQuery.queryEqual(toValue: nickName).observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
@@ -73,27 +73,25 @@ class UsersProvider {
         }
     }
     
-    func getUsers(for ids: [String], completion: @escaping ([User]) -> ()) {
+    func getUsers(for ids: [String], completion: @escaping ([User]) -> Void) {
         var users = [User]()
         var totalCount = ids.count
-        for id in ids {
-            getUserWith(id: id) { (user) in
+        for identifier in ids {
+            getUserWith(id: identifier) { (user) in
                 if user != nil {
                     users.append(user!)
                     if users.count == totalCount {
                         completion(users)
                     }
                 } else {
-                    totalCount = totalCount - 1
+                    totalCount -= 1
                 }
             }
         }
     }
     
-    
-    
-    func updateNickname(nickname: String, previousNickname: String? , completion: @escaping (Bool) -> ()) {
-        nicknameReference.child(nickname).setValue(true) { (error:Error?, ref:DatabaseReference) in
+    func updateNickname(nickname: String, previousNickname: String?, completion: @escaping (Bool) -> Void) {
+        nicknameReference.child(nickname).setValue(true) { (error: Error?, ref: DatabaseReference) in
             if error != nil {
                 completion(false)
             } else if previousNickname != nil {
@@ -104,19 +102,18 @@ class UsersProvider {
         }
     }
     
-    func removeNickname(nickname: String, completion: @escaping (Bool) -> ()) {
-        nicknameReference.child(nickname).removeValue() { (error:Error?, ref:DatabaseReference) in
+    func removeNickname(nickname: String, completion: @escaping (Bool) -> Void) {
+        nicknameReference.child(nickname).removeValue() { (error: Error?, ref: DatabaseReference) in
             completion(true)
         }
     }
     
-    func updateUser(user: User, completion: @escaping (Error?)->()) {
+    func updateUser(user: User, completion: @escaping (Error?) -> Void) {
         var userDictionary = ["nickname": user.userName]
         if let image = user.image?.absoluteString {
             userDictionary["image"] = image
         }
-        userReference.child(user.userId).setValue(userDictionary) {
-            (error:Error?, ref:DatabaseReference) in
+        userReference.child(user.userId).setValue(userDictionary) { (error: Error?, ref: DatabaseReference) in
             if let error = error {
                 completion(error)
             } else {

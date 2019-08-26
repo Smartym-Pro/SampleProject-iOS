@@ -55,13 +55,13 @@ class ChatController: UIViewController {
     @IBAction func addAttachment(_ sender: Any) {
         self.view.endEditing(false)
         let vc = UIAlertController(title: "Add photo", message: nil, preferredStyle: .actionSheet)
-        let camera = UIAlertAction(title: "Take photo", style: .default) { (action) in
+        let camera = UIAlertAction(title: "Take photo", style: .default) { _ in
             self.choosePhoto(.camera)
         }
-        let galery = UIAlertAction(title: "Gallery", style: .default) { (action) in
+        let galery = UIAlertAction(title: "Gallery", style: .default) { _ in
             self.choosePhoto(.photoLibrary)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
             
         }
         vc.addAction(camera)
@@ -126,9 +126,9 @@ class ChatController: UIViewController {
         let currentOffset = tableView.contentOffset
         let keyboardOffset = (keyboardHeight - self.view.safeAreaInsets.bottom)*(moveUp ? 1: -1)
         var resultOffset = currentOffset.y + keyboardOffset < 0 ? 0 : currentOffset.y + keyboardOffset
-        if tableView.contentSize.height <= resultOffset{
+        if tableView.contentSize.height <= resultOffset {
             resultOffset = 0
-        } else if tableView.contentSize.height <= tableView.bounds.height && moveUp{
+        } else if tableView.contentSize.height <= tableView.bounds.height && moveUp {
             resultOffset = keyboardOffset - (tableView.bounds.height - tableView.contentSize.height)
         }
         let options = UIView.AnimationOptions(rawValue: curve << 16)
@@ -138,8 +138,6 @@ class ChatController: UIViewController {
             self.tableView.setContentOffset(CGPoint(x: 0, y: resultOffset), animated: false)
         }, completion: nil)
     }
-
-    
 
 }
 extension ChatController: UITableViewDataSource {
@@ -207,9 +205,8 @@ extension ChatController: ChatViewModelDelegate {
     }
 }
 
-
 extension ChatController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.originalImage] as? UIImage else {
             return
@@ -230,5 +227,3 @@ extension ChatController: ChatCellDelegate {
 }
 
 extension ChatController: UINavigationControllerDelegate { }
-
-

@@ -96,6 +96,7 @@ PODS:
     - SDWebImage/Core (= 5.0.6)
   - SDWebImage/Core (5.0.6)
   - SimpleImageViewer (1.1.1)
+  - SwiftLint (0.34.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -107,6 +108,7 @@ DEPENDENCIES:
   - PKHUD
   - SDWebImage
   - SimpleImageViewer
+  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -129,6 +131,7 @@ SPEC REPOS:
     - Protobuf
     - SDWebImage
     - SimpleImageViewer
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
@@ -150,7 +153,8 @@ SPEC CHECKSUMS:
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
   SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
+  SwiftLint: 79d48a17c6565dc286c37efb8322c7b450f95c67
 
-PODFILE CHECKSUM: eb99e277b409457612896d571a21af21fce329d1
+PODFILE CHECKSUM: 37ae64e0de611cb630e7cd04533fd2998e4d0b38
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.7.5

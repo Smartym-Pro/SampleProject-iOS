@@ -29,25 +29,21 @@ class FilesStorage {
     
     static let shared = FilesStorage()
     var ref: DatabaseReference!
-   
     
     var storage: Storage!
-    
     
     static func initialize() {
         FilesStorage.shared.ref = Database.database().reference()
         FilesStorage.shared.storage = Storage.storage()
     }
     
-    
-    func uploadImage(image: UIImage, path: String, name: String, progress: ((Double)->())? = nil, completion: @escaping (URL?) -> ()) {
+    func uploadImage(image: UIImage, path: String, name: String, progress: ((Double) -> Void)? = nil, completion: @escaping (URL?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {
             completion(nil)
             return
         }
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
-        
         
         let storageRef = storage.reference()
         let avatarRef = storageRef.child(path + "\(name).jpg")
@@ -56,7 +52,7 @@ class FilesStorage {
                 completion(nil)
                 return
             }
-            avatarRef.downloadURL { (url, error) in
+            avatarRef.downloadURL { (url, _) in
                 guard let downloadURL = url else {
                     completion(nil)
                     return
@@ -82,32 +78,28 @@ class FilesStorage {
         uploadTask.observe(.success) { snapshot in
             
         }
+        
         uploadTask.observe(.failure) { snapshot in
             if let error = snapshot.error as NSError? {
-                switch (StorageErrorCode(rawValue: error.code)!) {
-                case .objectNotFound:
+                switch (StorageErrorCode(rawValue: error.code)) {
+                case .objectNotFound?:
                     // File doesn't exist
                     completion(nil)
-                    break
-                case .unauthorized:
+                case .unauthorized?:
                     // User doesn't have permission to access file
                     completion(nil)
-                    break
-                case .cancelled:
+                case .cancelled?:
                     // User canceled the upload
                     completion(nil)
-                    break
                     
                     /* ... */
                     
-                case .unknown:
+                case .unknown?:
                     // Unknown error occurred, inspect the server response
                     completion(nil)
-                    break
                 default:
                     // A separate error occurred. This is a good place to retry the upload.
                     completion(nil)
-                    break
                 }
             }
         }

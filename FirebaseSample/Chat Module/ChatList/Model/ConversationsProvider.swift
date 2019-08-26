@@ -9,7 +9,6 @@
 import Foundation
 import Firebase
 
-
 protocol ConversationsProviderDelegate: class {
     func conversationsDidStartFetching()
     func conversationsDidFinishFetching(conversations: [Conversation])
@@ -31,7 +30,7 @@ class ConversationsProvider {
         delegate?.conversationsDidStartFetching()
         currentUserConversationsReference.child(currentUserID).queryOrdered(byChild: "timestamp").observe(.value) { (snapshot) in
             if snapshot.exists() {
-              
+                
                 guard let children = snapshot.children.allObjects as? [DataSnapshot] else { return }
                 var conversations = [Conversation]()
                 for child in children {
@@ -48,27 +47,26 @@ class ConversationsProvider {
         }
     }
     
-    func getOrCreateConversation(with user: User, completion: @escaping (Conversation?) -> ()) {
+    func getOrCreateConversation(with user: User, completion: @escaping (Conversation?) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             completion(nil)
             return
         }
         let conversationId = self.conversationId(with: currentUserId, recipientId: user.userId)
         currentUserConversationsReference.child(currentUserId).child(conversationId).queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value) { (snapshot) in
-             if snapshot.exists() {
-                guard let dictionary = snapshot.value as? [String : AnyHashable] else {
+            if snapshot.exists() {
+                guard let dictionary = snapshot.value as? [String: AnyHashable] else {
                     completion(nil)
                     return
                 }
                 completion(Conversation(dictionary: dictionary, roomToken: conversationId))
-             } else {
+            } else {
                 self.createConversation(with: DataManager.shared.getCurrentUser(), recipient: user, completion: completion)
             }
         }
     }
     
-    
-    func createConversation(with currentUser: User, recipient: User, completion: @escaping (Conversation?) -> ()) {
+    func createConversation(with currentUser: User, recipient: User, completion: @escaping (Conversation?) -> Void) {
         guard let currentUserId = Auth.auth().currentUser?.uid else {
             completion(nil)
             return
@@ -77,17 +75,14 @@ class ConversationsProvider {
         let conversationId = self.conversationId(with: currentUserId, recipientId: recipient.userId)
         let conversationForCurrentUser = Conversation.convertToServer(sender: recipient, timestamp: startConversationDate, lastMessage: nil)
         let conversationForRecipient = Conversation.convertToServer(sender: currentUser, timestamp: startConversationDate, lastMessage: nil)
-        currentUserConversationsReference.child(currentUserId).updateChildValues([conversationId: conversationForCurrentUser]) {
-            (error:Error?, ref:DatabaseReference) in
-            if error == nil {
-                self.currentUserConversationsReference.child(recipient.userId).updateChildValues([conversationId: conversationForRecipient]) {
-                    (error:Error?, ref:DatabaseReference) in
-                    if error == nil {
-                        let conversation = Conversation(dictionary: conversationForCurrentUser as! [String : AnyHashable], roomToken: conversationId)
-                        completion(conversation)
-                    } else {
-                        completion(nil)
-                    }
+        currentUserConversationsReference.child(currentUserId).updateChildValues([conversationId: conversationForCurrentUser]) { (error: Error?, ref: DatabaseReference) in
+            if error == nil { self.currentUserConversationsReference.child(recipient.userId).updateChildValues([conversationId: conversationForRecipient]) { (error, ref) in
+                if error == nil {
+                    let conversation = Conversation(dictionary: conversationForCurrentUser as! [String: AnyHashable], roomToken: conversationId)
+                    completion(conversation)
+                } else {
+                    completion(nil)
+                }
                 }
             } else {
                 completion(nil)
@@ -95,7 +90,6 @@ class ConversationsProvider {
         }
     }
 }
-
 
 extension ConversationsProvider {
     func conversationId(with currentUId: String, recipientId: String) -> String {

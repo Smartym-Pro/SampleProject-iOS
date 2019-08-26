@@ -13,7 +13,7 @@ target 'FirebaseSample' do
   pod 'SDWebImage'
   pod 'PKHUD'
   pod 'SimpleImageViewer'
-
+  pod 'SwiftLint'
 end
 
 post_install do |installer|

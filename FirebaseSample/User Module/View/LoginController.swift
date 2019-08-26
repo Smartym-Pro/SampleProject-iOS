@@ -32,7 +32,6 @@ class LoginController: UIViewController {
         }
     }
     
-    
     @IBAction func register(_ sender: UIButton) {
         guard isValidCredentials() else { return }
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -45,6 +44,7 @@ class LoginController: UIViewController {
             }
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? EditProfileController {
             vc.state = .newProfile
@@ -60,6 +60,4 @@ class LoginController: UIViewController {
         view.endEditing(true)
     }
     
-
 }
-

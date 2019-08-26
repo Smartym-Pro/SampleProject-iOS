@@ -1,0 +1,9 @@
+disabled_rules:
+  - trailing_whitespace
+  - line_length
+  - identifier_name
+  - function_body_length
+  - unused_closure_parameter
+  - force_cast
+excluded:
+  - Pods

@@ -12,16 +12,16 @@ class Conversation {
     let userId: String!
     let roomToken: String!
     let timestamp: Date!
-    var lastMessage: Message? = nil
-    var user: User? = nil
-    init(dictionary: [String : AnyHashable], roomToken:String) {
+    var lastMessage: Message?
+    var user: User?
+    init(dictionary: [String: AnyHashable], roomToken: String) {
         let interlocutor = dictionary["interlocutor"] as? [String: String]
         let timestamp = dictionary["timestamp"] as? Int64
         self.timestamp = Date.init(milliseconds: abs(timestamp ?? 0))
         self.nickname = interlocutor?["nickname"] ?? ""
         self.userId = interlocutor?["user_id"] ?? ""
         
-        if let messageDictionary = dictionary["last_message"] as? [String : AnyHashable] {
+        if let messageDictionary = dictionary["last_message"] as? [String: AnyHashable] {
             self.lastMessage = Message.init(dictionary: messageDictionary)
         }
         self.roomToken = roomToken
@@ -29,7 +29,7 @@ class Conversation {
 }
 
 extension Conversation {
-    static func convertToServer(sender: User, timestamp: Date, lastMessage: Message?) -> [String : Any] {
+    static func convertToServer(sender: User, timestamp: Date, lastMessage: Message?) -> [String: Any] {
         var dictionary: [String: Any] = ["timestamp": (0 - timestamp.millisecondsSince1970)]
         let interlocutor = ["nickname": sender.userName, "user_id": sender.userId]
         dictionary["interlocutor"] = interlocutor

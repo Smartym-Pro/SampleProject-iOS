@@ -32,7 +32,6 @@ class ChatListController: UITableViewController {
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dd MMMM HH:mm", options: 0, locale: Locale.current)
     }
 
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getConversations()
@@ -46,7 +45,7 @@ class ChatListController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.conversations.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as! ChatListCell
         let conversation = viewModel.conversations[indexPath.row]
@@ -82,7 +81,7 @@ class ChatListController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? ChatController, let data = sender as? (Conversation,User) {
+        if let vc = segue.destination as? ChatController, let data = sender as? (Conversation, User) {
             vc.viewModel.conversation = data.0
             vc.viewModel.user = data.1
         } else if let vc = segue.destination as? EditProfileController {
