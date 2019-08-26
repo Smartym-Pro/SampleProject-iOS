@@ -6,7 +6,6 @@
 //  Copyright © 2019 smartum.pro. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 extension String {

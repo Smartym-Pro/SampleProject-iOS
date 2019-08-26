@@ -10,13 +10,13 @@ import UIKit
 
 class CreateConversationController: UIViewController {
 
-    @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet private weak var userNameTextField: UITextField!
     weak var provider: ConversationsProvider?
  
     @IBAction func createConversation(_ sender: Any) {
         let userName = userNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         guard userName != nil, userName!.count > 0 else { return }
-        self.showProgressHUD()
+        showProgressHUD()
         UsersProvider.shared.getUserWith(nickName: userName!) { (user) in
             self.hideProgressHUD()
             if user != nil {
@@ -27,7 +27,7 @@ class CreateConversationController: UIViewController {
         }
     }
     
-    func createConversation(with user: User) {
+    private func createConversation(with user: User) {
         ConversationsProvider().getOrCreateConversation(with: user, completion: { (conversation) in
             if conversation != nil {
                 self.performSegue(withIdentifier: "openChat", sender: (conversation, user))

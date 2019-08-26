@@ -6,7 +6,6 @@
 //  Copyright © 2019 smartum.pro. All rights reserved.
 //
 
-import Foundation
 import Firebase
 import UIKit
 import FirebaseStorage
@@ -28,9 +27,9 @@ struct ImagesPath {
 class FilesStorage {
     
     static let shared = FilesStorage()
-    var ref: DatabaseReference!
+    private var ref: DatabaseReference!
     
-    var storage: Storage!
+    private var storage: Storage!
     
     static func initialize() {
         FilesStorage.shared.ref = Database.database().reference()

@@ -10,16 +10,17 @@ import UIKit
 import FirebaseAuth
 
 class LoginController: UIViewController {
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordLabel: UILabel!
-    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet private weak var emailLabel: UILabel!
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var passwordLabel: UILabel!
+    @IBOutlet private weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    @IBAction func login(_ sender: UIButton) {
+    @IBAction private func login(_ sender: UIButton) {
         guard isValidCredentials() else { return }
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -32,7 +33,7 @@ class LoginController: UIViewController {
         }
     }
     
-    @IBAction func register(_ sender: UIButton) {
+    @IBAction private func register(_ sender: UIButton) {
         guard isValidCredentials() else { return }
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -51,12 +52,13 @@ class LoginController: UIViewController {
         }
     }
     
-    func isValidCredentials() -> Bool {
+    private func isValidCredentials() -> Bool {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return false }
         guard email.trimmingCharacters(in: .whitespacesAndNewlines).count > 0, password.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return false }
         return true
     }
-    @IBAction func hideKeyboard(_ sender: Any) {
+    
+    @IBAction private func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
     }
     

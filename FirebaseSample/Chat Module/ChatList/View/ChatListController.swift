@@ -18,8 +18,8 @@ class ChatListCell: UITableViewCell {
 }
 
 class ChatListController: UITableViewController {
-
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    
+    @IBOutlet private weak var settingsButton: UIBarButtonItem!
     private let dateFormatter = DateFormatter()
     private lazy var viewModel: ChatListViewModel = {
         return ChatListViewModel(delegate: self)
@@ -27,11 +27,11 @@ class ChatListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Conversations"
+        title = "Conversations"
         tableView.tableFooterView = UIView()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dd MMMM HH:mm", options: 0, locale: Locale.current)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getConversations()
@@ -41,11 +41,11 @@ class ChatListController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.conversations.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as! ChatListCell
         let conversation = viewModel.conversations[indexPath.row]
@@ -72,6 +72,7 @@ class ChatListController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 77
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversation = viewModel.conversations[indexPath.row]
         guard let user = viewModel.users[conversation.userId] else {
@@ -88,18 +89,18 @@ class ChatListController: UITableViewController {
             vc.state = .editProfile
         }
     }
-
+    
 }
 
 extension ChatListController: ChatListViewModelDelegate {
     func conversationsDidStartUpdating() {
-        self.title = "Updating..."
-//        self.showProgressHUD()
+        title = "Updating..."
+        //        self.showProgressHUD()
     }
     
     func conversationsDidReceived() {
-        self.title = "Conversations"
-        self.hideProgressHUD()
+        title = "Conversations"
+        hideProgressHUD()
         tableView.reloadData()
     }
     

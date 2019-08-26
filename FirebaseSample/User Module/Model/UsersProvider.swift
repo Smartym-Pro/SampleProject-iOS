@@ -34,11 +34,11 @@ class UsersProvider {
                         completion(nil)
                         return
                     }
-                        if child.key == "image" {
-                            imageURL = URL(string: string)
-                        } else if child.key == "nickname" {
-                            nickname = string
-                        }
+                    if child.key == "image" {
+                        imageURL = URL(string: string)
+                    } else if child.key == "nickname" {
+                        nickname = string
+                    }
                 }
                 guard nickname != nil else {
                     completion(nil)

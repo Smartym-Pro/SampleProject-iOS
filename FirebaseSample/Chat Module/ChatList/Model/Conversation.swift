@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class Conversation {
     let nickname: String!
     let userId: String!

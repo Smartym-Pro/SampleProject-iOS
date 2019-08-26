@@ -6,7 +6,6 @@
 //  Copyright © 2019 smartum.pro. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 protocol ChatViewModelDelegate: class {
@@ -30,7 +29,7 @@ class ChatViewModel {
     }
     
     func getMessages() {
-        self.messagesProvider.observeMessages(for: conversation)
+        messagesProvider.observeMessages(for: conversation)
     }
     func sendMessage(_ message: Message) {
         messagesProvider.sendMessage(message, in: conversation, with: user) { (success) in

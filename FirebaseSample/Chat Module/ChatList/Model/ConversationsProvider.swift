@@ -15,6 +15,7 @@ protocol ConversationsProviderDelegate: class {
 }
 
 class ConversationsProvider {
+    
     weak var delegate: ConversationsProviderDelegate?
     
     fileprivate var provider: ConversationsProvider!
@@ -24,7 +25,7 @@ class ConversationsProvider {
         self.delegate = delegate
         currentUserConversationsReference = Database.database().reference().child("conversations")
     }
-
+    
     func getConversations() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         delegate?.conversationsDidStartFetching()

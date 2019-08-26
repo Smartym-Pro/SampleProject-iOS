@@ -15,13 +15,15 @@ enum EditState {
 }
 
 class EditProfileController: UIViewController {
-
-    @IBOutlet weak var confirmButton: UIButton!
-    @IBOutlet weak var signOutButton: UIButton!
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var userNameTextField: UITextField!
+    
+    @IBOutlet private weak var confirmButton: UIButton!
+    @IBOutlet private weak var signOutButton: UIButton!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var userNameTextField: UITextField!
+    
     var user: User?
     var state: EditState = .newProfile
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getCurrentUser()
@@ -32,9 +34,9 @@ class EditProfileController: UIViewController {
         updateUI()
     }
     
-    func updateUI() {
+    private func updateUI() {
         if let image = user?.image {
-             avatarImageView.sd_setImage(with: image, placeholderImage: UIImage(named: "empty_photo"), options: .highPriority, context: nil)
+            avatarImageView.sd_setImage(with: image, placeholderImage: UIImage(named: "empty_photo"), options: .highPriority, context: nil)
         } else {
             avatarImageView.image = UIImage(named: "empty_photo")
         }
@@ -49,7 +51,7 @@ class EditProfileController: UIViewController {
         }
     }
     
-    func getCurrentUser() {
+    private func getCurrentUser() {
         showProgressHUD()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         UsersProvider.shared.getUserWith(id: uid) { (user) in
@@ -65,20 +67,20 @@ class EditProfileController: UIViewController {
         }
     }
     
-    @IBAction func avatarAction(_ sender: Any) {
+    @IBAction private func avatarAction(_ sender: Any) {
         let picker = UIImagePickerController.init()
         picker.sourceType = .camera
         picker.cameraCaptureMode = .photo
         picker.cameraDevice = .front
         picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func startAction(_ sender: Any) {
+    @IBAction private func startAction(_ sender: Any) {
         let userName = userNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         guard userName != nil, userName!.count > 0 else { return }
         if userName! == user?.userName {
-            self.showProgressHUD()
+            showProgressHUD()
             updateUser()
         } else {
             updateNickname(userName!)
@@ -86,7 +88,7 @@ class EditProfileController: UIViewController {
         return
     }
     
-    @IBAction func signOut(_ sender: Any) {
+    @IBAction private func signOut(_ sender: Any) {
         do {
             try Auth.auth().signOut()
             DataManager.shared.signOut()
@@ -97,9 +99,9 @@ class EditProfileController: UIViewController {
         }
     }
     
-    func updateUser() {
+    private func updateUser() {
         guard let user = self.user else {
-            self.hideProgressHUD()
+            hideProgressHUD()
             return
         }
         UsersProvider.shared.updateUser(user: user) { (error) in
@@ -113,8 +115,8 @@ class EditProfileController: UIViewController {
         }
     }
     
-    func updateNickname(_ nickname: String) {
-        self.showProgressHUD()
+    private func updateNickname(_ nickname: String) {
+        showProgressHUD()
         let previousName = user?.userName != "" ? user?.userName : nil
         UsersProvider.shared.updateNickname(nickname: nickname, previousNickname: previousName ) { (success) in
             DispatchQueue.main.async {
@@ -128,11 +130,11 @@ class EditProfileController: UIViewController {
             }
         }
     }
-
-    func uploadAvatar(avatar: UIImage) {
+    
+    private func uploadAvatar(avatar: UIImage) {
         avatarImageView.image = avatar
         avatarImageView.alpha = 0.5
-        self.showProgressHUD()
+        showProgressHUD()
         FilesStorage.shared.uploadImage(image: avatar, path: ImagesPath.avatarPath(), name: UUID().uuidString) { (url) in
             self.hideProgressHUD()
             guard let url = url else {

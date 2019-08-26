@@ -23,6 +23,7 @@ class DataManager: NSObject {
     func getCurrentUser() -> User {
         return User(userName: nickname!, userId: userId!, image: avatar)
     }
+    
     var userId: String? {
         get {
             return UserDefaults.standard.value(forKey: k_userId) as? String
@@ -42,6 +43,7 @@ class DataManager: NSObject {
             UserDefaults.standard.synchronize()
         }
     }
+    
     var avatar: URL? {
         get {
             return UserDefaults.standard.value(forKey: k_avatar) as? URL

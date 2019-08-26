@@ -16,14 +16,16 @@ extension UIButton {
 }
 
 class ChatController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var placeholderTextView: UITextView!
-    @IBOutlet weak var inputTextView: UITextView!
-    @IBOutlet weak var inputViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var placeholderTextView: UITextView!
+    @IBOutlet private weak var inputTextView: UITextView!
+    @IBOutlet private weak var inputViewHeight: NSLayoutConstraint!
+    @IBOutlet private weak var sendButton: UIButton!
     private let dateFormatter = DateFormatter()
     private let maxNumberOfInputLines = CGFloat(7)
-
+    
+    private var keyboardIsShown = false
+    
     lazy var viewModel: ChatViewModel = {
         return ChatViewModel(delegate: self)
     }()
@@ -35,7 +37,7 @@ class ChatController: UIViewController {
         placeholderTextView.textContainerInset = inputTextView.textContainerInset
         sendButton.setEnabled(false)
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "dd MMMM HH:mm", options: 0, locale: Locale.current)
-        self.title = viewModel.user.userName
+        title = viewModel.user.userName
         tableView.estimatedRowHeight = ceil((tableView.bounds.width - 16 - 100) * 9/16)
         tableView.rowHeight = UITableView.automaticDimension
         addKeyboardObserverse()
@@ -53,7 +55,7 @@ class ChatController: UIViewController {
     }
 
     @IBAction func addAttachment(_ sender: Any) {
-        self.view.endEditing(false)
+        view.endEditing(false)
         let vc = UIAlertController(title: "Add photo", message: nil, preferredStyle: .actionSheet)
         let camera = UIAlertAction(title: "Take photo", style: .default) { _ in
             self.choosePhoto(.camera)
@@ -67,30 +69,30 @@ class ChatController: UIViewController {
         vc.addAction(camera)
         vc.addAction(galery)
         vc.addAction(cancel)
-        self.present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func sendAction(_ sender: Any) {
         let message = Message(author: DataManager.shared.userId!, timestamp: Date(), text: inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines), image: nil)
-        self.inputTextView.text = ""
-        self.sendButton.setEnabled(false)
+        inputTextView.text = ""
+        sendButton.setEnabled(false)
         viewModel.sendMessage(message)
-        _ = self.textView(inputTextView, shouldChangeTextIn: .init(location: 0, length: 0), replacementText: "")
+        _ = textView(inputTextView, shouldChangeTextIn: .init(location: 0, length: 0), replacementText: "")
     }
     
     @IBAction func hideKeyboard(_ sender: Any) {
-        self.view.endEditing(false)
+        view.endEditing(false)
     }
     
-    func choosePhoto(_ type: UIImagePickerController.SourceType) {
+    private func choosePhoto(_ type: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController.init()
         picker.sourceType = type
         picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
-    func uploadImageAndSend(_ image: UIImage) {
-        self.showProgressHUD()
+    private func uploadImageAndSend(_ image: UIImage) {
+        showProgressHUD()
         viewModel.uploadImage(image) { (url) in
             self.hideProgressHUD()
             if url != nil {
@@ -100,7 +102,7 @@ class ChatController: UIViewController {
         }
     }
     
-    func scrollToBottom(animate: Bool) {
+    private func scrollToBottom(animate: Bool) {
         DispatchQueue.main.async {
             if self.viewModel.messages.isEmpty == false {
                 let indexPath = IndexPath(item: self.tableView.numberOfRows(inSection: 0) - 1, section: 0)
@@ -108,8 +110,6 @@ class ChatController: UIViewController {
             }
         }
     }
-    
-    private var keyboardIsShown = false
     
     @objc func animateWithKeyboard(notification: NSNotification) {
         let userInfo = notification.userInfo!
@@ -124,7 +124,7 @@ class ChatController: UIViewController {
             self.view.layoutMargins.bottom = distance
         }
         let currentOffset = tableView.contentOffset
-        let keyboardOffset = (keyboardHeight - self.view.safeAreaInsets.bottom)*(moveUp ? 1: -1)
+        let keyboardOffset = (keyboardHeight - view.safeAreaInsets.bottom)*(moveUp ? 1: -1)
         var resultOffset = currentOffset.y + keyboardOffset < 0 ? 0 : currentOffset.y + keyboardOffset
         if tableView.contentSize.height <= resultOffset {
             resultOffset = 0
@@ -138,8 +138,8 @@ class ChatController: UIViewController {
             self.tableView.setContentOffset(CGPoint(x: 0, y: resultOffset), animated: false)
         }, completion: nil)
     }
-
 }
+
 extension ChatController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.messages.count
@@ -190,10 +190,11 @@ extension ChatController: UITextViewDelegate {
         return true
     }
 }
+
 extension ChatController: ChatViewModelDelegate {
     func messageDidSend(success: Bool) {
         if !success {
-            self.showError("Something became wrong")
+            showError("Something became wrong")
         }
     }
     
@@ -215,6 +216,7 @@ extension ChatController: UIImagePickerControllerDelegate {
         
     }
 }
+
 extension ChatController: ChatCellDelegate {
     func didSelectMessage(message: Message, cell: ChatCell?) {
         guard let cell = cell else { return }
